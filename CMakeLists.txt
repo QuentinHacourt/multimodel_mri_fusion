@@ -1,16 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
-project(OpenCVTest)
+project(MRI_Fusion)
 
-# Find OpenCV package
 find_package(OpenCV REQUIRED)
 
-include_directories(${OpenCV_INCLUDE_DIRS})
+add_executable(MRI_Fusion src/main.cpp)
 
-# Add the executable
-add_executable(OpenCVTest src/main.cpp)
+target_include_directories(MRI_Fusion PRIVATE ${OpenCV_INCLUDE_DIRS})
 
-# Link OpenCV libraries to your executable
-target_link_libraries(OpenCVTest PRIVATE ${OpenCV_LIBS})
-
-# Export compile commands for Doom Emacs (LSP)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+target_link_libraries(MRI_Fusion PRIVATE ${OpenCV_LIBS})

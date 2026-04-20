@@ -1,0 +1,7 @@
+CompileFlags:
+  Add: [
+    "-I/usr/include/opencv4",
+    "-std=c++17"
+  ]
+  # This tells clangd to ask the compiler where the "real" headers are
+  QueryDriver: ["/usr/bin/g++", "/usr/bin/gcc", "/usr/bin/clang++"]

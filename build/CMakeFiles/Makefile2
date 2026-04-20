@@ -63,11 +63,11 @@ CMAKE_BINARY_DIR = /home/quentin/vub/1ma/image-processing/project/multimodel_mri
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/OpenCVTest.dir/all
+all: CMakeFiles/MRI_Fusion.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
-codegen: CMakeFiles/OpenCVTest.dir/codegen
+codegen: CMakeFiles/MRI_Fusion.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -75,40 +75,40 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/OpenCVTest.dir/clean
+clean: CMakeFiles/MRI_Fusion.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/OpenCVTest.dir
+# Target rules for target CMakeFiles/MRI_Fusion.dir
 
 # All Build rule for target.
-CMakeFiles/OpenCVTest.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenCVTest.dir/build.make CMakeFiles/OpenCVTest.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenCVTest.dir/build.make CMakeFiles/OpenCVTest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quentin/vub/1ma/image-processing/project/multimodel_mri_fusion/build/CMakeFiles --progress-num=1,2 "Built target OpenCVTest"
-.PHONY : CMakeFiles/OpenCVTest.dir/all
+CMakeFiles/MRI_Fusion.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MRI_Fusion.dir/build.make CMakeFiles/MRI_Fusion.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MRI_Fusion.dir/build.make CMakeFiles/MRI_Fusion.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quentin/vub/1ma/image-processing/project/multimodel_mri_fusion/build/CMakeFiles --progress-num=1,2 "Built target MRI_Fusion"
+.PHONY : CMakeFiles/MRI_Fusion.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/OpenCVTest.dir/rule: cmake_check_build_system
+CMakeFiles/MRI_Fusion.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/quentin/vub/1ma/image-processing/project/multimodel_mri_fusion/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/OpenCVTest.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/MRI_Fusion.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/quentin/vub/1ma/image-processing/project/multimodel_mri_fusion/build/CMakeFiles 0
-.PHONY : CMakeFiles/OpenCVTest.dir/rule
+.PHONY : CMakeFiles/MRI_Fusion.dir/rule
 
 # Convenience name for target.
-OpenCVTest: CMakeFiles/OpenCVTest.dir/rule
-.PHONY : OpenCVTest
+MRI_Fusion: CMakeFiles/MRI_Fusion.dir/rule
+.PHONY : MRI_Fusion
 
 # codegen rule for target.
-CMakeFiles/OpenCVTest.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenCVTest.dir/build.make CMakeFiles/OpenCVTest.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quentin/vub/1ma/image-processing/project/multimodel_mri_fusion/build/CMakeFiles --progress-num=1,2 "Finished codegen for target OpenCVTest"
-.PHONY : CMakeFiles/OpenCVTest.dir/codegen
+CMakeFiles/MRI_Fusion.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MRI_Fusion.dir/build.make CMakeFiles/MRI_Fusion.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quentin/vub/1ma/image-processing/project/multimodel_mri_fusion/build/CMakeFiles --progress-num=1,2 "Finished codegen for target MRI_Fusion"
+.PHONY : CMakeFiles/MRI_Fusion.dir/codegen
 
 # clean rule for target.
-CMakeFiles/OpenCVTest.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenCVTest.dir/build.make CMakeFiles/OpenCVTest.dir/clean
-.PHONY : CMakeFiles/OpenCVTest.dir/clean
+CMakeFiles/MRI_Fusion.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MRI_Fusion.dir/build.make CMakeFiles/MRI_Fusion.dir/clean
+.PHONY : CMakeFiles/MRI_Fusion.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

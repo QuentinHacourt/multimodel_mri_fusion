@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named OpenCVTest
+# Target rules for targets named MRI_Fusion
 
 # Build rule for target.
-OpenCVTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 OpenCVTest
-.PHONY : OpenCVTest
+MRI_Fusion: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MRI_Fusion
+.PHONY : MRI_Fusion
 
 # fast build rule for target.
-OpenCVTest/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenCVTest.dir/build.make CMakeFiles/OpenCVTest.dir/build
-.PHONY : OpenCVTest/fast
+MRI_Fusion/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MRI_Fusion.dir/build.make CMakeFiles/MRI_Fusion.dir/build
+.PHONY : MRI_Fusion/fast
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenCVTest.dir/build.make CMakeFiles/OpenCVTest.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MRI_Fusion.dir/build.make CMakeFiles/MRI_Fusion.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -142,7 +142,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenCVTest.dir/build.make CMakeFiles/OpenCVTest.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MRI_Fusion.dir/build.make CMakeFiles/MRI_Fusion.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -150,7 +150,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenCVTest.dir/build.make CMakeFiles/OpenCVTest.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MRI_Fusion.dir/build.make CMakeFiles/MRI_Fusion.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -161,7 +161,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... OpenCVTest"
+	@echo "... MRI_Fusion"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

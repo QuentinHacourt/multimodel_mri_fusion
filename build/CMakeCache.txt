@@ -97,6 +97,9 @@ CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=
 //Flags used by the linker during RELWITHDEBINFO builds.
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
+//No help, variable specified on the command line.
+CMAKE_EXPORT_COMMANDS:UNINITIALIZED=ON
+
 //Enable/Disable output of compile commands during generation.
 CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=
 
@@ -151,7 +154,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=OpenCVTest
+CMAKE_PROJECT_NAME:STATIC=MRI_Fusion
 
 //Value Computed by CMake
 CMAKE_PROJECT_SPDX_LICENSE:STATIC=
@@ -222,13 +225,13 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-OpenCVTest_BINARY_DIR:STATIC=/home/quentin/vub/1ma/image-processing/project/multimodel_mri_fusion/build
+MRI_Fusion_BINARY_DIR:STATIC=/home/quentin/vub/1ma/image-processing/project/multimodel_mri_fusion/build
 
 //Value Computed by CMake
-OpenCVTest_IS_TOP_LEVEL:STATIC=ON
+MRI_Fusion_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-OpenCVTest_SOURCE_DIR:STATIC=/home/quentin/vub/1ma/image-processing/project/multimodel_mri_fusion
+MRI_Fusion_SOURCE_DIR:STATIC=/home/quentin/vub/1ma/image-processing/project/multimodel_mri_fusion
 
 //The directory containing a CMake configuration file for OpenCV.
 OpenCV_DIR:PATH=/usr/lib/cmake/opencv4

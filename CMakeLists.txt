@@ -1,12 +1,13 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15)
 project(MRI_Fusion)
 
 find_package(OpenCV REQUIRED)
 find_package(SimpleITK REQUIRED)
 
+include(${ITK_USE_FILE})
+
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(MRI_Fusion ${SOURCES})
-# add_executable(MRI_Fusion src/main.cpp)
 
 target_include_directories(MRI_Fusion PRIVATE ${OpenCV_INCLUDE_DIRS})
 

@@ -14,8 +14,9 @@ all: build run
 # configure and compile
 build:
 	@mkdir -p $(build_dir)
-	@cmake -S . -B $(build_dir) -DCMAKE_BUILD_TYPE=Release
+	@cmake -S . -B $(build_dir) -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 	@cmake --build $(build_dir)
+	@cp $(build_dir)/compile_commands.json .
 
 # run the executable
 # run:

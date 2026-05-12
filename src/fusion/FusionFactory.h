@@ -1,19 +1,22 @@
 #ifndef FUSIONFACTORY_H_
 #define FUSIONFACTORY_H_
 #include "IFusionStrategy.h"
+#include "PrincipalComponentsStrategy.h"
 #include "WeightedAverageStrategy.h"
 #include <memory>
 #include <string>
 
 class FusionFactory {
   public:
-    enum class Type { WeightedAverage };
+    enum class Type { WeightedAverage, PrincipalComponents };
 
     static std::unique_ptr<IFusionStrategy>
     create(Type type, const std::vector<float> &params = {}) {
         switch (type) {
         case Type::WeightedAverage:
             return std::make_unique<WeightedAverageStrategy>(params);
+        case Type::PrincipalComponents:
+            return std::make_unique<PrincipalComponentsStrategy>();
         default:
             return nullptr;
         }

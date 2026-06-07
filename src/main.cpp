@@ -32,6 +32,8 @@ int main() {
 
     auto PCA = FusionFactory::create(FusionFactory::Type::PrincipalComponents);
 
+    auto Wavelets = FusionFactory::create(FusionFactory::Type::Wavelet);
+
     if (averages) {
         cv::Mat result = averages->fuse(images);
 
@@ -43,7 +45,13 @@ int main() {
     if (PCA) {
         cv::Mat result = PCA->fuse(images);
         showImage(result, "PCA");
-        showImage(result - images[0], "difference");
+    } else {
+        std::cerr << "Error: invalid PCA strategy!" << std::endl;
+    }
+
+    if (Wavelets) {
+        cv::Mat result = Wavelets->fuse(images);
+        showImage(result, "Wavelets");
     } else {
         std::cerr << "Error: invalid PCA strategy!" << std::endl;
     }

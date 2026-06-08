@@ -159,9 +159,10 @@ class LaplacianPyramidStrategy : public IFusionStrategy {
 
     cv::Mat weightedAverages(const std::vector<cv::Mat> &Gs) {
         cv::Mat res = cv::Mat::zeros(Gs[0].size(), Gs[0].type());
-        const double weight = 1.0 / Gs.size();
-        for (const cv::Mat &band : Gs)
-            res += weight * band;
+        std::vector<float> weights = {0.1, 0.3, 0.3, 0.3};
+        for (int i = 0; i < Gs.size(); i++)
+            res += Gs[i] * weights[i];
+
         return res;
     }
 

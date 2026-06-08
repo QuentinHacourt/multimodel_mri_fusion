@@ -169,9 +169,11 @@ class WaveletBasedStrategy : public IFusionStrategy {
 
     cv::Mat fuseLL(const std::vector<cv::Mat> &LLbands) {
         cv::Mat res = cv::Mat::zeros(LLbands[0].size(), LLbands[0].type());
-        const double weight = 1.0 / LLbands.size();
-        for (const cv::Mat &band : LLbands)
-            res += weight * band;
+        std::vector<float> weights = {0.1, 0.3, 0.3, 0.3};
+        for (int i = 0; i < LLbands.size(); i++) {
+            res += LLbands[i] * weights[i];
+        }
+
         return res;
     }
 

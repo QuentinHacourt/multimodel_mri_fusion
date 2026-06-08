@@ -26,7 +26,7 @@ int main() {
     showImage(images[2], "image 3");
     showImage(images[3], "image 4");
 
-    std::vector<float> weights = {1, 1, 1, 1};
+    std::vector<float> weights = {0.1, 0.3, 0.3, 0.3};
 
     auto ssim = StructuralSimilarityIndexMeasure();
 

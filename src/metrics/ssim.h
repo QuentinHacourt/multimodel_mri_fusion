@@ -11,8 +11,6 @@
 class StructuralSimilarityIndexMeasure {
   private:
     double variance(const cv::Mat &img) {
-        // Explicitly convert to CV_64F so .at<double> matches the data buffer
-        // type perfectly
         cv::Mat imgDouble;
         img.convertTo(imgDouble, CV_64F);
 
@@ -36,8 +34,6 @@ class StructuralSimilarityIndexMeasure {
     }
 
     double covariance(const cv::Mat &img1, const cv::Mat &img2) {
-        // Explicitly convert both inputs to CV_64F to prevent data layout
-        // corruption
         cv::Mat img1Double, img2Double;
         img1.convertTo(img1Double, CV_64F);
         img2.convertTo(img2Double, CV_64F);
@@ -129,7 +125,7 @@ class StructuralSimilarityIndexMeasure {
 
         double res = 0;
         std::vector<double> rs{};
-        const int rows = imgs[0].rows; // Safer to use index 0 index layout
+        const int rows = imgs[0].rows;
         const int cols = imgs[0].cols;
         int offset = 20;
 

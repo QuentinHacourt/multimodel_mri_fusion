@@ -3,7 +3,6 @@
 
 #include "IFusionStrategy.h"
 #include <cmath>
-#include <iostream>
 #include <limits>
 #include <opencv2/opencv.hpp>
 #include <vector>

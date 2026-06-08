@@ -10,92 +10,85 @@
 
 class StructuralSimilarityIndexMeasure {
   private:
-    double variance(cv::Mat img) {
-        const int rows = img.rows;
-        const int cols = img.cols;
+    double variance(const cv::Mat &img) {
+        // Explicitly convert to CV_64F so .at<double> matches the data buffer
+        // type perfectly
+        cv::Mat imgDouble;
+        img.convertTo(imgDouble, CV_64F);
+
+        const int rows = imgDouble.rows;
+        const int cols = imgDouble.cols;
         const double denominator = (rows * cols) - 1;
-        const double mimg = cv::mean(img).val[0];
+
+        if (denominator <= 0)
+            return 0.0;
+
+        const double mimg = cv::mean(imgDouble).val[0];
+        double numerator = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                numerator += pow((imgDouble.at<double>(i, j) - mimg), 2);
+            }
+        }
+
+        return numerator / denominator;
+    }
+
+    double covariance(const cv::Mat &img1, const cv::Mat &img2) {
+        // Explicitly convert both inputs to CV_64F to prevent data layout
+        // corruption
+        cv::Mat img1Double, img2Double;
+        img1.convertTo(img1Double, CV_64F);
+        img2.convertTo(img2Double, CV_64F);
+
+        const int rows = img1Double.rows;
+        const int cols = img1Double.cols;
+        const double denominator = (rows * cols) - 1;
+        const double mimg1 = cv::mean(img1Double).val[0];
+        const double mimg2 = cv::mean(img2Double).val[0];
+
+        if (denominator <= 0)
+            return 0.0;
 
         double numerator = 0;
 
-        for (int i; i < rows; i++) {
-            for (int j; j < cols; j++) {
-                numerator += pow((img.at<double>(i, j) - mimg), 2);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                numerator += (img1Double.at<double>(i, j) - mimg1) *
+                             (img2Double.at<double>(i, j) - mimg2);
             }
         }
 
         return numerator / denominator;
     }
 
-    double covariance(cv::Mat img1, cv::Mat img2) {
-        const int rows = img1.rows;
-        const int cols = img1.cols;
-        const double denominator = (rows * cols) - 1;
-        const double mimg1 = cv::mean(img1).val[0];
-        const double mimg2 = cv::mean(img2).val[0];
+    double localQualityIndex(const cv::Mat &w1, const cv::Mat &w2, double var1,
+                             double var2) {
+        const double m1 = cv::mean(w1).val[0];
+        const double m2 = cv::mean(w2).val[0];
+        const double covar = covariance(w1, w2);
 
-        double numerator = 0;
+        const double numerator = 4 * covar * m1 * m2;
+        const double denominator = (pow(m1, 2) + pow(m2, 2)) * (var1 + var2);
 
-        for (int i; i < rows; i++) {
-            for (int j; j < cols; j++) {
-                numerator += (img1.at<double>(i, j) - mimg1) *
-                             (img2.at<double>(i, j) - mimg2);
-            }
-        }
+        if (denominator == 0.0)
+            return (m1 == m2 && var1 == var2) ? 1.0 : 0.0;
 
         return numerator / denominator;
     }
 
-    double localQualityIndex(cv::Mat img1, cv::Mat img2) {
-        const double m1 = cv::mean(img1).val[0];
-        const double m2 = cv::mean(img2).val[0];
-        const double numerator = 4 * covariance(img1, img2) * m1 * m2;
-        const double denominator =
-            (pow(m1, 2) + pow(m2, 2)) *
-            (pow(variance(img1), 2) * pow(variance(img2), 2));
-
-        return numerator / denominator;
-    }
-
-    double QualityIndex(const cv::Mat img1, const cv::Mat img2,
-                        const int offset = 10) {
-        const int rows = img1.rows;
-        const int cols = img1.cols;
-
-        int counter = 0;
-        double sum = 0;
-
-        for (int i = offset; i < rows - offset; i++) {
-            for (int j = offset; i < cols - offset; i++) {
-                counter++;
-
-                const cv::Mat a = img1(cv::Range(i - offset, i + offset),
-                                       cv::Range(j - offset, j + offset));
-
-                const cv::Mat b = img2(cv::Range(i - offset, i + offset),
-                                       cv::Range(j - offset, j + offset));
-
-                sum += localQualityIndex(a, b);
-            }
-        }
-
-        return sum / counter;
-    }
-
-    std::vector<double> lambdas(std::vector<cv::Mat> imgs) {
+    std::vector<double> lambdas(std::vector<cv::Mat> &imgs) {
         std::vector<double> result{};
 
-        // makes it slightly faster
-        result.reserve(imgs.size());
-
-        for (int i = 0; i < imgs.size(); i++) {
+        for (size_t i = 0; i < imgs.size(); i++) {
             result.push_back(variance(imgs[i]));
         }
 
         return result;
     }
 
-    double sumVector(std::vector<double> v) {
+    double sumVector(std::vector<double> &v) {
         double sum = 0;
 
         for (double num : v)
@@ -104,22 +97,20 @@ class StructuralSimilarityIndexMeasure {
         return sum;
     }
 
-    std::vector<double> lambdaIs(std::vector<cv::Mat> imgs) {
+    std::vector<double> lambdaIs(std::vector<cv::Mat> &imgs) {
         std::vector<double> lmbds = lambdas(imgs);
         double sumlmbds = sumVector(lmbds);
         std::vector<double> lmbdis{};
 
-        // makes it slightly faster
-        lmbdis.reserve(imgs.size());
-
-        // very funny joke
-        for (int c = 0; c < imgs.size(); c++)
-            lmbdis.push_back(lmbds[c] / sumlmbds);
+        for (size_t i = 0; i < imgs.size(); i++) {
+            lmbdis.push_back(sumlmbds == 0.0 ? 1.0 / imgs.size()
+                                             : lmbds[i] / sumlmbds);
+        }
 
         return lmbdis;
     }
 
-    double C(std::vector<double> lmbds) {
+    double C(std::vector<double> &lmbds) {
         double max = -std::numeric_limits<double>::infinity();
 
         for (double l : lmbds)
@@ -132,36 +123,59 @@ class StructuralSimilarityIndexMeasure {
     double c(double C, double sumCs) { return C / sumCs; }
 
   public:
-    double metric(std::vector<cv::Mat> imgs, cv::Mat fused) {
+    double metric(std::vector<cv::Mat> &imgs, cv::Mat &fused) {
+        if (imgs.empty() || fused.empty())
+            return 0.0;
+
         double res = 0;
         std::vector<double> rs{};
-        const int rows = imgs[1].rows;
-        const int cols = imgs[1].cols;
+        const int rows = imgs[0].rows; // Safer to use index 0 index layout
+        const int cols = imgs[0].cols;
         int offset = 20;
 
         std::vector<double> Ceeees{};
 
         for (int i = offset; i < rows - offset; i++) {
-            for (int j = offset; i < cols - offset; i++) {
+            for (int j = offset; j < cols - offset; j++) {
                 double r = 0;
                 const cv::Mat wf = fused(cv::Range(i - offset, i + offset),
                                          cv::Range(j - offset, j + offset));
 
                 std::vector<cv::Mat> ws{};
+                std::vector<double> local_variances{};
+                double sum_variances = 0.0;
+                double max_variance = -std::numeric_limits<double>::infinity();
 
-                for (cv::Mat img : imgs) {
-                    const cv::Mat w = img(cv::Range(i - offset, i + offset),
-                                          cv::Range(j - offset, j + offset));
-
+                for (const cv::Mat &img : imgs) {
+                    cv::Mat w = img(cv::Range(i - offset, i + offset),
+                                    cv::Range(j - offset, j + offset));
                     ws.push_back(w);
+
+                    double var = variance(w);
+                    local_variances.push_back(var);
+                    sum_variances += var;
+                    if (var > max_variance) {
+                        max_variance = var;
+                    }
                 }
 
-                std::vector<double> lmbdIs = lambdaIs(ws);
+                if (max_variance < 0)
+                    max_variance = 0.0;
 
-                Ceeees.push_back(C(lambdas(ws)));
+                std::vector<double> lmbdIs{};
+                for (double var : local_variances) {
+                    lmbdIs.push_back(sum_variances == 0.0
+                                         ? 1.0 / imgs.size()
+                                         : var / sum_variances);
+                }
 
-                for (int i = 0; i < imgs.size(); i++) {
-                    r += lmbdIs[i] * localQualityIndex(ws[i], wf);
+                Ceeees.push_back(max_variance);
+
+                double var_fused = variance(wf);
+                for (size_t k = 0; k < imgs.size(); k++) {
+                    r += lmbdIs[k] * localQualityIndex(ws[k], wf,
+                                                       local_variances[k],
+                                                       var_fused);
                 }
 
                 rs.push_back(r);
@@ -170,8 +184,11 @@ class StructuralSimilarityIndexMeasure {
 
         double sumCeeees = sumVector(Ceeees);
 
-        for (int i = 0; i < rs.size(); i++)
-            res += (Ceeees[i] / sumCeeees) * rs[i];
+        for (size_t i = 0; i < rs.size(); i++) {
+            double weight = (sumCeeees == 0.0) ? (1.0 / rs.size())
+                                               : (Ceeees[i] / sumCeeees);
+            res += weight * rs[i];
+        }
 
         return res;
     }

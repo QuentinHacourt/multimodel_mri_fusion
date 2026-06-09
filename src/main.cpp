@@ -10,10 +10,6 @@ cv::Mat weightedAverage(std::vector<cv::Mat> &images,
 std::vector<float> normalize(std::vector<float> weights);
 
 int main() {
-    int rows = 400;
-    int cols = 400;
-    std::cout << "hello" << std::endl;
-
     std::vector<cv::Mat> images = {
         loadImage("data/BraTS2021_00495_t1.nii.gz"),
         loadImage("data/BraTS2021_00495_t1ce.nii.gz"),

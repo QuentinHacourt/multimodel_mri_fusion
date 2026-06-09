@@ -16,21 +16,11 @@ class PrincipalComponentsStrategy : public IFusionStrategy {
 
         int n = x.size();
 
-        /* Eigen::MatrixXd mat(n, n); */
-        /* for (int i = 0; i < n; i++) */
-        /*     for (int j = 0; j < n; j++) */
-        /*         mat(i, j) = static_cast<double>(C_x[i][j]); */
-
         Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> solver(C_x);
         Eigen::VectorXd eigenvalues = solver.eigenvalues();
         Eigen::MatrixXd eigenvectors = solver.eigenvectors();
 
-        /* for (int i = 0; i < n; i++) */
-        /*     std::cout << eigenvalues[i] << std::endl; */
-
         Eigen::MatrixXd A = sorted(eigenvalues, eigenvectors);
-
-        /* Eigen::VectorXd y = A * (x - m_x); */
 
         Eigen::VectorXd A_k = A.row(0);
 
@@ -86,15 +76,12 @@ class PrincipalComponentsStrategy : public IFusionStrategy {
 
         for (int64 row = 0; row < rows; row++) {
             for (int64 col = 0; col < cols; col++) {
-
                 Eigen::VectorXd x = Eigen::VectorXd::Zero(n);
 
                 for (int64 i = 0; i < n; i++)
                     x[i] = images[i].at<uchar>(row, col);
 
                 C_x += (x - m_x) * (x - m_x).transpose();
-
-                /* res.at<uchar>(i, j) = approximate(x, m_x, C_x); */
             }
         }
 

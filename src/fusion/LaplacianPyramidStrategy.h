@@ -95,21 +95,6 @@ class LaplacianPyramidStrategy : public IFusionStrategy {
         }
         return res;
     }
-    /* cv::Mat upsampleCols(cv::Mat img, int targetRows) { */
-    /*     const int cols = img.cols; */
-
-    /*     cv::Mat res = cv::Mat::zeros(targetRows, cols, img.type()); */
-
-    /*     for (int k = 0; k < img.rows; k++) { */
-    /*         for (int j = 0; j < cols; j++) { */
-    /*             double val = img.at<double>(k, j); */
-    /*             int row = 2 * k; */
-    /*             if (row >= 0 && row < targetRows) */
-    /*                 res.at<double>(row, j) += val; */
-    /*         } */
-    /*     } */
-    /*     return res; */
-    /* } */
 
     void decomposeLevel(cv::Mat img, cv::Mat &G) {
         // filter rows
